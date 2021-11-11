@@ -8,7 +8,7 @@ import Nav from "../../components/nav";
 import ButtonToggle from "../../components/button-toggle";
 import "../../assets/css/main.css";
 
-const useCookieState = (cookieName, initialState) => {
+const useBooleanCookie = (cookieName, initialState) => {
   const [cookie, setCookie] = useCookie(cookieName, String(initialState));
   const [isCookieEnabled, setCookieEnabled] = useState(cookie === 'true');
 
@@ -23,11 +23,11 @@ const useCookieState = (cookieName, initialState) => {
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
 
-  const [devanagariEnabled, setDevanagariEnabled] = useCookieState('vedabase_devanagari', true);
-  const [verseTextEnabled, setVerseTextEnabled] = useCookieState('vedabase_versetext', true);
-  const [glossaryEnabled, setGlossaryEnabled] = useCookieState('vedabase_glossary', true);
-  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useCookieState('vedabase_englishtranslation', true);
-  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useCookieState('vedabase_hinditranslation', true);
+  const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
+  const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
+  const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
+  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
+  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
 
   const toggleDevanagari = useCallback(() => {
     setDevanagariEnabled(!devanagariEnabled);
