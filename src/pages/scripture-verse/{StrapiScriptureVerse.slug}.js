@@ -1,38 +1,53 @@
 import React, { useCallback, useState } from "react";
 import { graphql, Link } from "gatsby";
 import { Col, Container, Row } from "react-bootstrap";
+import useCookie from 'react-use-cookie';
+
 import Layout from "../../components/layout";
 import Nav from "../../components/nav";
 import ButtonToggle from "../../components/button-toggle";
 import "../../assets/css/main.css";
 
+const useCookieState = (cookieName, initialState) => {
+  const [cookie, setCookie] = useCookie(cookieName, String(initialState));
+  const [isCookieEnabled, setCookieEnabled] = useState(cookie === 'true');
+
+  const setCookieState = (state) => {
+    setCookieEnabled(state);
+    setCookie(String(state));
+  }
+
+  return [isCookieEnabled, setCookieState];
+}
+
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
-  const [devanagariEnabled, setDevanagariEnabled] = useState(true);
-  const [verseTextEnabled, setVerseTextEnabled] = useState(true);
-  const [glossaryEnabled, setGlossaryEnabled] = useState(true);
-  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useState(true);
-  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useState(true);
+
+  const [devanagariEnabled, setDevanagariEnabled] = useCookieState('vedabase_devanagari', true);
+  const [verseTextEnabled, setVerseTextEnabled] = useCookieState('vedabase_versetext', true);
+  const [glossaryEnabled, setGlossaryEnabled] = useCookieState('vedabase_glossary', true);
+  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useCookieState('vedabase_englishtranslation', true);
+  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useCookieState('vedabase_hinditranslation', true);
 
   const toggleDevanagari = useCallback(() => {
     setDevanagariEnabled(!devanagariEnabled);
-  }, [devanagariEnabled]);
+  }, [setDevanagariEnabled, devanagariEnabled]);
 
   const toggleVerseText = useCallback(() => {
     setVerseTextEnabled(!verseTextEnabled);
-  }, [verseTextEnabled]);
+  }, [setVerseTextEnabled, verseTextEnabled]);
 
   const toggleGlossary = useCallback(() => {
     setGlossaryEnabled(!glossaryEnabled);
-  }, [glossaryEnabled]);
+  }, [setGlossaryEnabled, glossaryEnabled]);
 
   const toggleEnglishTranslation = useCallback(() => {
     setEnglishTranslationEnabled(!englishTranslationEnabled);
-  }, [englishTranslationEnabled]);
+  }, [setEnglishTranslationEnabled, englishTranslationEnabled]);
 
   const toggleHindiTranslation = useCallback(() => {
     setHindiTranslationEnabled(!hindiTranslationEnabled);
-  }, [hindiTranslationEnabled]);
+  }, [setHindiTranslationEnabled, hindiTranslationEnabled]);
 
   return (
     <Layout>
