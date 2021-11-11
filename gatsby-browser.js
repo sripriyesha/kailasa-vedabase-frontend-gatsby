@@ -6,4 +6,5 @@
 
 // You can delete this file if you're not using it
 import "bootstrap/dist/css/bootstrap.min.css";
-import './src/assets/css/main.css'
+import 'font-awesome/css/font-awesome.min.css';
+import './src/assets/css/main.css';

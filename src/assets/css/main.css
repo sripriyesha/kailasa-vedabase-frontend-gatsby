@@ -1,53 +1,38 @@
 a {
-    text-decoration: none !important;
-  }
-  
-  h1 {
-    font-family: Staatliches !important;
-    font-size: 120px !important;
-  }
-  
-  #category {
-    font-family: Staatliches !important;
-    font-weight: 500 !important;
-  }
-  
-  #title {
-    letter-spacing: 0.4px !important;
-    font-size: 22px !important;
-    font-size: 1.375rem !important;
-    line-height: 1.13636 !important;
-  }
-  
-  #banner {
-    margin: 20px !important;
-    height: 800px !important;
-  }
-  
-  #editor {
-    font-size: 16px !important;
-    font-size: 1rem !important;
-    line-height: 1.75 !important;
-  }
-  
-  .uk-navbar-container {
-    background: #fff !important;
-    font-family: Staatliches !important;
-  }
-  
-  img:hover {
-    opacity: 1 !important;
-    transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1) !important;
-  }
+  text-decoration: none !important;
+}
+
+h1 {
+  font-family: Staatliches !important;
+  font-size: 120px !important;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+.btn-toggle {
+  line-height: 3.2em;
+  padding: .45em .5em .55em;
+  border: 1px solid #DA9D5B;
+  border-radius: 2px;
+  color: #735403;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 2em;
+  margin: 0 0 .3em .2em;
+  padding: .2em .5em;
+}
+
+.btn-toggle.off {
+  color: rgb(166 145 89 / 41%);
+  text-decoration: none;
+}
 
 @media (min-width: 1400px) {
   .container {
     max-width: 1140px;
   }
-}
-
-.navbar-brand {
-  font-weight: 700;
 }
 
 @media (min-width: 544px) {
