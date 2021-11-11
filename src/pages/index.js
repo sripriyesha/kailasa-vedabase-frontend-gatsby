@@ -1,20 +1,40 @@
 import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
+import { Col, Container, Navbar, Row } from "react-bootstrap";
 import Layout from "../components/layout";
-import ArticlesComponent from "../components/articles";
 import "../assets/css/main.css";
 
 const IndexPage = () => {
   const data = useStaticQuery(query);
 
+  const scriptures = data.allStrapiScripture.edges;
+
   return (
     <Layout seo={data.strapiHomepage.seo}>
-      <div className="uk-section">
-        <div className="uk-container uk-container-large">
-          <h1>{data.strapiHomepage.hero.title}</h1>
-          <ArticlesComponent articles={data.allStrapiArticle.edges} />
-        </div>
-      </div>
+      <Container>
+        <Row>
+          <Col sm={12}>
+            <Navbar>
+              <Navbar.Brand href="/">Kailasa Scriptures</Navbar.Brand>
+            </Navbar>
+            <h2>The topmost source of sanskrit scriptures</h2>
+          </Col>
+        </Row>
+        <Row>
+          {scriptures.map((scripture) => {
+            return (
+              <Col sm={2} md={2} lg={2}>
+                <Link
+                  to={`/scripture/${scripture.node.slug}`}
+                  key={scripture.node.slug}
+                >
+                  {scripture.node.title}
+                </Link>
+              </Col>
+            )
+          })}
+        </Row>
+      </Container>
     </Layout>
   );
 };
@@ -35,32 +55,11 @@ const query = graphql`
         }
       }
     }
-    allStrapiArticle {
+    allStrapiScripture {
       edges {
         node {
-          strapiId
-          slug
           title
-          category {
-            name
-          }
-          image {
-            localFile {
-              childImageSharp {
-                gatsbyImageData(width: 660)
-              }
-            }
-          }
-          author {
-            name
-            picture {
-              localFile {
-                childImageSharp {
-                  gatsbyImageData(width: 30)
-                }
-              }
-            }
-          }
+          slug
         }
       }
     }
