@@ -1,31 +1,70 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import React from "react";
+import { graphql, useStaticQuery } from "gatsby";
+import Layout from "../components/layout";
+import ArticlesComponent from "../components/articles";
+import "../assets/css/main.css";
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+const IndexPage = () => {
+  const data = useStaticQuery(query);
 
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["auto", "webp", "avif"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
-    <p>
-      <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link> <br />
-      <Link to="/using-ssr">Go to "Using SSR"</Link> <br />
-      <Link to="/using-dsg">Go to "Using DSG"</Link>
-    </p>
-  </Layout>
-)
+  return (
+    <Layout seo={data.strapiHomepage.seo}>
+      <div className="uk-section">
+        <div className="uk-container uk-container-large">
+          <h1>{data.strapiHomepage.hero.title}</h1>
+          <ArticlesComponent articles={data.allStrapiArticle.edges} />
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
-export default IndexPage
+const query = graphql`
+  query {
+    strapiHomepage {
+      hero {
+        title
+      }
+      seo {
+        metaTitle
+        metaDescription
+        shareImage {
+          localFile {
+            publicURL
+          }
+        }
+      }
+    }
+    allStrapiArticle {
+      edges {
+        node {
+          strapiId
+          slug
+          title
+          category {
+            name
+          }
+          image {
+            localFile {
+              childImageSharp {
+                gatsbyImageData(width: 660)
+              }
+            }
+          }
+          author {
+            name
+            picture {
+              localFile {
+                childImageSharp {
+                  gatsbyImageData(width: 30)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default IndexPage;
