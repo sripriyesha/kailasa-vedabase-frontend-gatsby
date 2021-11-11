@@ -1,7 +1,8 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import { Col, Container, Navbar, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Layout from "../../components/layout";
+import Nav from "../../components/nav";
 import "../../assets/css/main.css";
 
 const ScriptureVerse = ({ data }) => {
@@ -10,13 +11,7 @@ const ScriptureVerse = ({ data }) => {
   return (
     <Layout>
       <Container>
-        <Row>
-          <Col sm={12}>
-            <Navbar>
-              <Navbar.Brand href="/">Kailasa Scriptures</Navbar.Brand>
-            </Navbar>
-          </Col>
-        </Row>
+        <Nav />
         <Row>
           <Col sm={12}>
             <Link to={`/scripture/${scriptureVerse.scripture.slug}`}>

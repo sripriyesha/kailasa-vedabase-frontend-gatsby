@@ -24,7 +24,6 @@ const Layout = ({ children, seo }) => (
     render={(data) => (
       <>
         <Head seo={seo} />
-        {/* <Nav /> */}
         <main>{children}</main>
       </>
     )}

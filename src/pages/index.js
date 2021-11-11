@@ -1,7 +1,8 @@
 import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import { Col, Container, Navbar, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Layout from "../components/layout";
+import Nav from "../components/nav";
 import "../assets/css/main.css";
 
 const IndexPage = () => {
@@ -12,14 +13,9 @@ const IndexPage = () => {
   return (
     <Layout seo={data.strapiHomepage.seo}>
       <Container>
-        <Row>
-          <Col sm={12}>
-            <Navbar>
-              <Navbar.Brand href="/">Kailasa Scriptures</Navbar.Brand>
-            </Navbar>
-            <h2>The topmost source of sanskrit scriptures</h2>
-          </Col>
-        </Row>
+        <Nav>
+          <h2>The topmost source of sanskrit scriptures</h2>
+        </Nav>
         <Row>
           {scriptures.map((scripture) => {
             return (
