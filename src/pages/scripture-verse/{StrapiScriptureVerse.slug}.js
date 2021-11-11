@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby";
 import { Col, Container, Row } from "react-bootstrap";
 import Layout from "../../components/layout";
 import Nav from "../../components/nav";
+import ButtonToggle from "../../components/button-toggle";
 import "../../assets/css/main.css";
 
 const ScriptureVerse = ({ data }) => {
@@ -44,41 +45,31 @@ const ScriptureVerse = ({ data }) => {
             </Link>
           </Col>
         </Row>
-        <button
-          onClick={toggleDevanagari}
-          className={devanagariEnabled ? "btn-toggle" : "btn-toggle off"}
-        >
-          {devanagariEnabled ? <i class="fa fa-check-circle-o fa-lg"></i> : <i class="fa fa-ban fa-lg"></i>}
-          {' '}Devanagari
-        </button>
-        <button
-          onClick={toggleVerseText}
-          className={verseTextEnabled ? "btn-toggle" : "btn-toggle off"}
-        >
-          {verseTextEnabled ? <i class="fa fa-check-circle-o fa-lg"></i> : <i class="fa fa-ban fa-lg"></i>}
-          {' '}Verse Text
-        </button>
-        <button
-          onClick={toggleGlossary}
-          className={glossaryEnabled ? "btn-toggle" : "btn-toggle off"}
-        >
-          {glossaryEnabled ? <i class="fa fa-check-circle-o fa-lg"></i> : <i class="fa fa-ban fa-lg"></i>}
-          {' '}Glossary
-        </button>
-        <button
-          onClick={toggleEnglishTranslation}
-          className={englishTranslationEnabled ? "btn-toggle" : "btn-toggle off"}
-        >
-          {englishTranslationEnabled ? <i class="fa fa-check-circle-o fa-lg"></i> : <i class="fa fa-ban fa-lg"></i>}
-          {' '}English translation
-        </button>
-        <button
-          onClick={toggleHindiTranslation}
-          className={hindiTranslationEnabled ? "btn-toggle" : "btn-toggle off"}
-        >
-          {hindiTranslationEnabled ? <i class="fa fa-check-circle-o fa-lg"></i> : <i class="fa fa-ban fa-lg"></i>}
-          {' '}Hindi translation
-        </button>
+        <ButtonToggle
+          toggleFunction={toggleDevanagari}
+          flag={devanagariEnabled}
+          title={'Devanagari'}
+        />
+        <ButtonToggle
+          toggleFunction={toggleVerseText}
+          flag={verseTextEnabled}
+          title={'Verse Text'}
+        />
+        <ButtonToggle
+          toggleFunction={toggleGlossary}
+          flag={glossaryEnabled}
+          title={'Glossary'}
+        />
+        <ButtonToggle
+          toggleFunction={toggleEnglishTranslation}
+          flag={englishTranslationEnabled}
+          title={'English translation'}
+        />
+        <ButtonToggle
+          toggleFunction={toggleHindiTranslation}
+          flag={hindiTranslationEnabled}
+          title={'Hindi translation'}
+        />
         <Row>
           <p>{scriptureVerse.sutraNumber}</p>
           {devanagariEnabled && <p>{scriptureVerse.sanskritSutra}</p>}
