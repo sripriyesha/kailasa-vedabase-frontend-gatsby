@@ -71,7 +71,7 @@ const ScriptureVerse = ({ data }) => {
           </Col>
         </Row>
         <ButtonToggle
-          toggleFunction={toggleDevanagari}
+          toggleFunction={() => setDevanagariCookie(String(!(devanagariCookie === 'true')))}
           isOn={devanagariCookie === 'true'}
           title={'Devanagari'}
         />
