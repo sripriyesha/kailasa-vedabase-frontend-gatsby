@@ -22,26 +22,17 @@ const useBooleanCookie = (cookieName, initialState) => {
 
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
-  const [devanagariCookie, setDevanagariCookie] = useCookie('vedabase_devanagari', 'true');
-  // const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
+  const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
   const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
   const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
   const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
   const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
 
-  // console.log(`devanagariEnabled ${devanagariEnabled}`);
-  console.log(`verseTextEnabled ${verseTextEnabled}`);
-  console.log(`glossaryEnabled ${glossaryEnabled}`);
-  console.log(`englishTranslationEnabled ${englishTranslationEnabled}`);
-  console.log(`hindiTranslationEnabled ${hindiTranslationEnabled}`);
+  console.log(`devanagariEnabled ${devanagariEnabled}`);
 
   const toggleDevanagari = useCallback(() => {
-    setDevanagariCookie(String(!devanagariCookie === 'true'));
-  }, [setDevanagariCookie, devanagariCookie]);
-
-  // const toggleDevanagari = useCallback(() => {
-  //   setDevanagariEnabled(!devanagariEnabled);
-  // }, [setDevanagariEnabled, devanagariEnabled]);
+    setDevanagariEnabled(!devanagariEnabled);
+  }, [setDevanagariEnabled, devanagariEnabled]);
 
   const toggleVerseText = useCallback(() => {
     setVerseTextEnabled(!verseTextEnabled);
@@ -71,8 +62,8 @@ const ScriptureVerse = ({ data }) => {
           </Col>
         </Row>
         <ButtonToggle
-          toggleFunction={() => setDevanagariCookie(String(!(devanagariCookie === 'true')))}
-          isOn={devanagariCookie === 'true'}
+          toggleFunction={toggleDevanagari}
+          isOn={devanagariEnabled}
           title={'Devanagari'}
         />
         <ButtonToggle
@@ -97,7 +88,7 @@ const ScriptureVerse = ({ data }) => {
         />
         <Row>
           <p>{scriptureVerse.sutraNumber}</p>
-          {devanagariCookie === 'true' && <p>{scriptureVerse.sanskritSutra}</p>}
+          {devanagariEnabled && <p>{scriptureVerse.sanskritSutra}</p>}
           {verseTextEnabled && <p>{scriptureVerse.transliteration}</p>}
           {glossaryEnabled && <p>{scriptureVerse.glossary}</p>}
           {englishTranslationEnabled && <p>{scriptureVerse.translationAurobindoEnglish}</p>}
