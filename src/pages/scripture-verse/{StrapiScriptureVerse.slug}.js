@@ -29,6 +29,12 @@ const ScriptureVerse = ({ data }) => {
   const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
   const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
 
+  console.log(`devanagariEnabled ${devanagariEnabled}`);
+  console.log(`verseTextEnabled ${verseTextEnabled}`);
+  console.log(`glossaryEnabled ${glossaryEnabled}`);
+  console.log(`englishTranslationEnabled ${englishTranslationEnabled}`);
+  console.log(`hindiTranslationEnabled ${hindiTranslationEnabled}`);
+
   const toggleDevanagari = useCallback(() => {
     setDevanagariEnabled(!devanagariEnabled);
   }, [setDevanagariEnabled, devanagariEnabled]);
@@ -62,27 +68,27 @@ const ScriptureVerse = ({ data }) => {
         </Row>
         <ButtonToggle
           toggleFunction={toggleDevanagari}
-          flag={devanagariEnabled}
+          isOn={devanagariEnabled}
           title={'Devanagari'}
         />
         <ButtonToggle
           toggleFunction={toggleVerseText}
-          flag={verseTextEnabled}
+          isOn={verseTextEnabled}
           title={'Verse Text'}
         />
         <ButtonToggle
           toggleFunction={toggleGlossary}
-          flag={glossaryEnabled}
+          isOn={glossaryEnabled}
           title={'Glossary'}
         />
         <ButtonToggle
           toggleFunction={toggleEnglishTranslation}
-          flag={englishTranslationEnabled}
+          isOn={englishTranslationEnabled}
           title={'English translation'}
         />
         <ButtonToggle
           toggleFunction={toggleHindiTranslation}
-          flag={hindiTranslationEnabled}
+          isOn={hindiTranslationEnabled}
           title={'Hindi translation'}
         />
         <Row>
