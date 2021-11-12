@@ -1,46 +1,21 @@
 import React, { useCallback/*, useState */} from "react";
 import { graphql, Link } from "gatsby";
 import { Col, Container, Row } from "react-bootstrap";
-// import useCookie from 'react-use-cookie';
-import createPersistedState from 'use-persisted-state';
 
 import Layout from "../../components/layout";
 import Nav from "../../components/nav";
 import ButtonToggle from "../../components/button-toggle";
+import useBooleanCookie from "../../hooks/useBooleanCookie";
 import "../../assets/css/main.css";
-
-// const useBooleanCookie = (cookieName, initialState) => {
-//   const [cookie, setCookie] = useCookie(cookieName, String(initialState));
-//   const [isCookieEnabled, setCookieEnabled] = useState(cookie === 'true');
-
-//   const setCookieState = (state) => {
-//     setCookieEnabled(state);
-//     setCookie(String(state));
-//   }
-
-//   return [isCookieEnabled, setCookieState];
-// }
-
-const useDevanagariState = createPersistedState('devanagari');
-const useVerseTextState = createPersistedState('versetext');
-const useGlossaryState = createPersistedState('glossary');
-const useEnglishTranslationState = createPersistedState('englishtranslation');
-const useHindiTranslationState = createPersistedState('hinditranslation');
-
 
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
-  // const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
-  // const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
-  // const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
-  // const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
-  // const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
-
-  const [devanagariEnabled, setDevanagariEnabled] = useDevanagariState(true);
-  const [verseTextEnabled, setVerseTextEnabled] = useVerseTextState(true);
-  const [glossaryEnabled, setGlossaryEnabled] = useGlossaryState(true);
-  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useEnglishTranslationState(true);
-  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useHindiTranslationState(true);
+  
+  const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
+  const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
+  const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
+  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
+  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
 
   const toggleDevanagari = useCallback(() => {
     setDevanagariEnabled(!devanagariEnabled);
