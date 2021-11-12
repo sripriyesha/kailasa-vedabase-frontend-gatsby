@@ -39,8 +39,7 @@ module.exports = {
       resolve: "gatsby-source-strapi",
       options: {
         apiURL: process.env.API_URL || "http://localhost:1337",
-        collectionTypes: ["article", "category", "writer", "scripture", "scripture-verse"],
-        singleTypes: [`homepage`, `global`],
+        collectionTypes: ["scripture", "scripture-verse"],
         queryLimit: 1000,
       },
     },
