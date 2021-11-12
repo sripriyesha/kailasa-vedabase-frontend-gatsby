@@ -1,6 +1,9 @@
 import React from "react";
 
 const ButtonToggle = ({toggleFunction, isOn, title}) => {
+
+  console.log(`title ${title} isOn ${isOn} ${isOn ? "btn-toggle" : "btn-toggle off"}`);
+
   return (
     <button
       onClick={toggleFunction}
