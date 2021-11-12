@@ -61,11 +61,26 @@ const ScriptureVerse = ({ data }) => {
             </Link>
           </Col>
         </Row>
-        <ButtonToggle
+        {/* <ButtonToggle
           toggleFunction={toggleDevanagari}
           isOn={devanagariEnabled}
           title={'Devanagari'}
-        />
+        /> */}
+        <button
+          onClick={toggleDevanagari}
+          className={(devanagariEnabled && "btn-toggle") || "btn-toggle off"}
+        >
+          {
+            (
+              devanagariEnabled
+              &&
+              <i className="fa fa-check-circle-o fa-lg"></i>
+            )
+            ||
+              <i className="fa fa-ban fa-lg"></i>
+          }
+          {' '}{'Devanagari'}
+        </button>
         <ButtonToggle
           toggleFunction={toggleVerseText}
           isOn={verseTextEnabled}
