@@ -11,7 +11,7 @@ const IndexPage = () => {
   const scriptures = data.allStrapiScripture.edges;
 
   return (
-    <Layout seo={data.strapiHomepage.seo}>
+    <Layout>
       <Container>
         <Nav>
           <h2>The topmost source of sanskrit scriptures</h2>
@@ -37,20 +37,6 @@ const IndexPage = () => {
 
 const query = graphql`
   query {
-    strapiHomepage {
-      hero {
-        title
-      }
-      seo {
-        metaTitle
-        metaDescription
-        shareImage {
-          localFile {
-            publicURL
-          }
-        }
-      }
-    }
     allStrapiScripture {
       edges {
         node {

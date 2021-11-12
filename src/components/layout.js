@@ -2,32 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 // import Nav from "./nav";
-import Head from "./head";
+// import Head from "./head";
 
 const Layout = ({ children, seo }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        strapiHomepage {
-          seo {
-            metaTitle
-            metaDescription
-            shareImage {
-              localFile {
-                publicURL
-              }
-            }
-          }
-        }
-      }
-    `}
-    render={(data) => (
-      <>
-        <Head seo={seo} />
-        <main>{children}</main>
-      </>
-    )}
-  />
+  <>
+    {/* <Head seo={seo} /> */}
+    <main>{children}</main>
+  </>
 );
 
 Layout.propTypes = {
