@@ -1,34 +1,46 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback/*, useState */} from "react";
 import { graphql, Link } from "gatsby";
 import { Col, Container, Row } from "react-bootstrap";
-import useCookie from 'react-use-cookie';
+// import useCookie from 'react-use-cookie';
+import createPersistedState from 'use-persisted-state';
 
 import Layout from "../../components/layout";
 import Nav from "../../components/nav";
 import ButtonToggle from "../../components/button-toggle";
 import "../../assets/css/main.css";
 
-const useBooleanCookie = (cookieName, initialState) => {
-  const [cookie, setCookie] = useCookie(cookieName, String(initialState));
-  const [isCookieEnabled, setCookieEnabled] = useState(cookie === 'true');
+// const useBooleanCookie = (cookieName, initialState) => {
+//   const [cookie, setCookie] = useCookie(cookieName, String(initialState));
+//   const [isCookieEnabled, setCookieEnabled] = useState(cookie === 'true');
 
-  const setCookieState = (state) => {
-    setCookieEnabled(state);
-    setCookie(String(state));
-  }
+//   const setCookieState = (state) => {
+//     setCookieEnabled(state);
+//     setCookie(String(state));
+//   }
 
-  return [isCookieEnabled, setCookieState];
-}
+//   return [isCookieEnabled, setCookieState];
+// }
+
+const useDevanagariState = createPersistedState('devanagari');
+const useVerseTextState = createPersistedState('versetext');
+const useGlossaryState = createPersistedState('glossary');
+const useEnglishTranslationState = createPersistedState('englishtranslation');
+const useHindiTranslationState = createPersistedState('hinditranslation');
+
 
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
-  const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
-  const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
-  const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
-  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
-  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
+  // const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
+  // const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
+  // const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
+  // const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
+  // const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
 
-  console.log(`devanagariEnabled ${devanagariEnabled}`);
+  const [devanagariEnabled, setDevanagariEnabled] = useDevanagariState(true);
+  const [verseTextEnabled, setVerseTextEnabled] = useVerseTextState(true);
+  const [glossaryEnabled, setGlossaryEnabled] = useGlossaryState(true);
+  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useEnglishTranslationState(true);
+  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useHindiTranslationState(true);
 
   const toggleDevanagari = useCallback(() => {
     setDevanagariEnabled(!devanagariEnabled);
@@ -61,26 +73,11 @@ const ScriptureVerse = ({ data }) => {
             </Link>
           </Col>
         </Row>
-        {/* <ButtonToggle
+        <ButtonToggle
           toggleFunction={toggleDevanagari}
           isOn={devanagariEnabled}
           title={'Devanagari'}
-        /> */}
-        <button
-          onClick={toggleDevanagari}
-          className={(devanagariEnabled && "btn-toggle") || "btn-toggle off"}
-        >
-          {
-            (
-              devanagariEnabled
-              &&
-              <i className="fa fa-check-circle-o fa-lg"></i>
-            )
-            ||
-              <i className="fa fa-ban fa-lg"></i>
-          }
-          {' '}{'Devanagari'}
-        </button>
+        />
         <ButtonToggle
           toggleFunction={toggleVerseText}
           isOn={verseTextEnabled}

@@ -27,7 +27,8 @@
     "react-helmet": "^6.1.0",
     "react-markdown": "^7.1.0",
     "react-moment": "^1.1.1",
-    "react-use-cookie": "^1.2.1"
+    "react-use-cookie": "^1.2.1",
+    "use-persisted-state": "^0.3.3"
   },
   "devDependencies": {
     "prettier": "^2.4.1"

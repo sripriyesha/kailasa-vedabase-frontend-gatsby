@@ -1,19 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const ButtonToggle = ({toggleFunction, isOn, title}) => {
-
-  useEffect(() => {
-    console.log(`title ${title} isOn ${isOn} ${isOn ? "btn-toggle" : "btn-toggle off"}`);
-  }, [title, isOn]);
-
-  useEffect(() => {
-    console.log('mount');
-
-    return () => {
-      console.log('unmount');
-    }
-  }, []);
-
   return (
     <button
       onClick={toggleFunction}
