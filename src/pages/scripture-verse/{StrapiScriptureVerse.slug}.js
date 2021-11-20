@@ -62,23 +62,23 @@ const ScriptureVerse = ({ data }) => {
           </Link>
         </Col>
       </Row>
-      <button className="btn-devanagari btn-toggle" data-toggle="text-devanagari">
+      <button className="btn-devanagari btn-toggle">
         <i className="fa fa-check-circle-o fa-lg"></i>
         {' Devanagari'}
       </button>
-      <button className="btn-verse-text btn-toggle" data-toggle="text-verse-text">
+      <button className="btn-verse-text btn-toggle">
         <i className="fa fa-check-circle-o fa-lg"></i>
         {' Verse Text'}
       </button>
-      <button className="btn-glossary btn-toggle" data-toggle="text-glossary">
+      <button className="btn-glossary btn-toggle">
         <i className="fa fa-check-circle-o fa-lg"></i>
         {' Glossary'}
       </button>
-      <button className="btn-translation-english btn-toggle" data-toggle="text-translation-english">
+      <button className="btn-translation-english btn-toggle">
         <i className="fa fa-check-circle-o fa-lg"></i>
         {' English translation'}
       </button>
-      <button className="btn-translation-hindi btn-toggle" data-toggle="text-translation-hindi">
+      <button className="btn-translation-hindi btn-toggle">
         <i className="fa fa-check-circle-o fa-lg"></i>
         {' Hindi translation'}
       </button>
