@@ -36,28 +36,25 @@ const HitCountAndIndexName = connectStateResults(({ searchResults, indexName }) 
   ) : null
 })
 
-const buildHighlightMarkup = (part, index) => (
-  part.isHighlighted ? (
-    <mark className="ais-Highlight-highlighted" key={index}>{part.value}</mark>
-  ) : (
-    <span className="ais-Highlight-nonHighlighted" key={index}>{part.value}</span>
+function buildHighlightMarkup (part, index) {
+  return (
+    part.isHighlighted ? (
+      <mark className="ais-Highlight-highlighted" key={index}>{part.value}</mark>
+    ) : (
+      <span className="ais-Highlight-nonHighlighted" key={index}>{part.value}</span>
+    )
   )
-);
+}
 
-const Highlight = ({ hit, indexName }) => {
-  let parsedHit = parseAlgoliaHit({
-    highlightProperty: '_highlightResult',
-    hit,
-    preTag: HIGHLIGHT_TAGS.highlightPreTag,
-    postTag: HIGHLIGHT_TAGS.highlightPostTag,
-    indexName
-  });
-
-  const markups = [];
+function buildHighlightedSearchResultMarkup({
+  parsedHit,
+  indexName,
+}) {
+  const markup = [];
 
   switch (indexName) {
     case 'scripture':
-      markups.push(
+      markup.push(
         <h4>
           {parsedHit['title'].map(
             (part, index) => buildHighlightMarkup(part, index)
@@ -67,9 +64,7 @@ const Highlight = ({ hit, indexName }) => {
       break;
 
     case 'scripture-verse':
-    // order translationAurobindoEnglish
-
-      markups.push(
+      markup.push(
         <h4>
           {parsedHit['translationAurobindoEnglish'].map(
             (part, index) => buildHighlightMarkup(part, index)
@@ -96,7 +91,7 @@ const Highlight = ({ hit, indexName }) => {
         const fieldName = orderedIndexRemainingFields[index];
         
         if (parsedHit.hasOwnProperty(fieldName)) {
-          markups.push(
+          markup.push(
             <p>
               {parsedHit[fieldName].map(
                 (part, index) => buildHighlightMarkup(part, index)
@@ -109,7 +104,7 @@ const Highlight = ({ hit, indexName }) => {
       }
 
       if (scripture !== null) {
-        markups.push(
+        markup.push(
           <p>
             <b>Scripture:</b> {scripture.map(
               (part, index) => buildHighlightMarkup(part, index)
@@ -123,9 +118,25 @@ const Highlight = ({ hit, indexName }) => {
       break;
   }
 
+  return markup;
+}
+
+const Highlight = ({ hit, indexName }) => {
+  let parsedHit = parseAlgoliaHit({
+    highlightProperty: '_highlightResult',
+    hit,
+    preTag: HIGHLIGHT_TAGS.highlightPreTag,
+    postTag: HIGHLIGHT_TAGS.highlightPostTag,
+    indexName
+  });
+
+  const markup = buildHighlightedSearchResultMarkup({
+    parsedHit, indexName
+  })
+  
   return (
     <span className="ais-Highlight">
-      {markups.map((item, index) => {
+      {markup.map((item, index) => {
         return (
           <div key={index}>
             {item}

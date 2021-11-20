@@ -47,82 +47,12 @@ function parseHighlightedAttribute({ preTag, postTag, highlightedValue = '' }) {
   return elements;
 }
 
-/**
- * Find an highlighted attribute given an `attribute` and an `highlightProperty`, parses it,
- * and provided an array of objects with the string value and a boolean if this
- * value is highlighted.
- *
- * In order to use this feature, highlight must be activated in the configuration of
- * the index. The `preTag` and `postTag` attributes are respectively highlightPreTag and
- * highlightPostTag in Algolia configuration.
- *
- * @param {string} preTag - string used to identify the start of an highlighted value
- * @param {string} postTag - string used to identify the end of an highlighted value
- * @param {string} highlightProperty - the property that contains the highlight structure in the results
- * @param {string} attribute - the highlighted attribute to look for
- * @param {object} hit - the actual hit returned by Algolia.
- * @return {object[]} - An array of {value: string, isHighlighted: boolean}.
- */
-export function parseAlgoliaHit({
-  preTag = '<em>',
-  postTag = '</em>',
-  highlightProperty,
-  attribute,
-  hit,
-  indexName
+function parseHighlightedAttributes({
+  indexName,
+  highlightObject,
+  preTag,
+  postTag
 }) {
-  if (!hit) throw new Error('`hit`, the matching record, must be provided');
-
-  let highlightObject = {};
-
-  for (const [recordKey, matchingObj] of Object.entries(hit[highlightProperty])) {
-    for (const [matchingObjKey, value] of Object.entries(matchingObj)) {
-      if (typeof value === 'object') {
-        for (const [valueKey, subValue] of Object.entries(value)) {
-          if (valueKey === 'matchLevel' && subValue === 'full') {
-            if (highlightObject[recordKey] !== 'object') {
-              highlightObject[recordKey] = {};
-            }
-
-            if (highlightObject[recordKey][matchingObjKey] !== 'object') {
-              highlightObject[recordKey][matchingObjKey] = {};
-            }
-
-            highlightObject[recordKey][matchingObjKey] = value['value'];
-          }
-        }
-
-        continue;
-      }
-
-      if (matchingObjKey === 'matchLevel' && value === 'full') {
-        // console.log(`${recordKey}>value: ${matchingObj['value']}`);
-        if (highlightObject[recordKey] !== 'object') {
-          highlightObject[recordKey] = {};
-        }
-
-        highlightObject[recordKey] = matchingObj['value'];
-      }
-    }   
-  }
-
-  // add fields that we want no matter what
-  switch (indexName) {
-    case 'scripture':
-      highlightObject['title'] = hit[highlightProperty]['title']['value'];
-      break;
-
-    case 'scripture-verse':
-      highlightObject['translationAurobindoEnglish'] = hit[highlightProperty]['translationAurobindoEnglish']['value'];
-      break;
-
-    default:
-      break;
-  }
-
-  highlightObject = omit(highlightObject, ['slug']);
-
-
   for (const [key, value] of Object.entries(highlightObject)) {
     switch (indexName) {
       case 'scripture':
@@ -155,6 +85,110 @@ export function parseAlgoliaHit({
         break;
     }
   }
+
+  return highlightObject;
+}
+
+function addMandatoryFields({
+  indexName,
+  highlightObject,
+  hit,
+  highlightProperty
+}) {
+  switch (indexName) {
+    case 'scripture':
+      highlightObject['title'] = hit[highlightProperty]['title']['value'];
+      break;
+
+    case 'scripture-verse':
+      highlightObject['translationAurobindoEnglish'] = hit[highlightProperty]['translationAurobindoEnglish']['value'];
+      break;
+
+    default:
+      break;
+  }
+
+  return highlightObject;
+}
+
+function parseHitAndCreateHighlightObject(highlightResult) {
+  const highlightObject = {};
+
+  for (const [recordKey, matchingObj] of Object.entries(highlightResult)) {
+    for (const [matchingObjKey, value] of Object.entries(matchingObj)) {
+      if (typeof value === 'object') {
+        for (const [valueKey, subValue] of Object.entries(value)) {
+          if (valueKey === 'matchLevel' && subValue === 'full') {
+            if (highlightObject[recordKey] !== 'object') {
+              highlightObject[recordKey] = {};
+            }
+
+            if (highlightObject[recordKey][matchingObjKey] !== 'object') {
+              highlightObject[recordKey][matchingObjKey] = {};
+            }
+
+            highlightObject[recordKey][matchingObjKey] = value['value'];
+          }
+        }
+
+        continue;
+      }
+
+      if (matchingObjKey === 'matchLevel' && value === 'full') {
+        if (highlightObject[recordKey] !== 'object') {
+          highlightObject[recordKey] = {};
+        }
+
+        highlightObject[recordKey] = matchingObj['value'];
+      }
+    }   
+  }
+
+  return highlightObject;
+}
+
+/**
+ * Find an highlighted attribute given an `attribute` and an `highlightProperty`, parses it,
+ * and provided an array of objects with the string value and a boolean if this
+ * value is highlighted.
+ *
+ * In order to use this feature, highlight must be activated in the configuration of
+ * the index. The `preTag` and `postTag` attributes are respectively highlightPreTag and
+ * highlightPostTag in Algolia configuration.
+ *
+ * @param {string} preTag - string used to identify the start of an highlighted value
+ * @param {string} postTag - string used to identify the end of an highlighted value
+ * @param {string} highlightProperty - the property that contains the highlight structure in the results
+ * @param {string} attribute - the highlighted attribute to look for
+ * @param {object} hit - the actual hit returned by Algolia.
+ * @return {object[]} - An array of {value: string, isHighlighted: boolean}.
+ */
+export function parseAlgoliaHit({
+  preTag = '<em>',
+  postTag = '</em>',
+  highlightProperty,
+  hit,
+  indexName
+}) {
+  if (!hit) throw new Error('`hit`, the matching record, must be provided');
+
+  let highlightObject = parseHitAndCreateHighlightObject(hit[highlightProperty]);
+
+  highlightObject = addMandatoryFields({
+    indexName,
+    highlightObject,
+    hit,
+    highlightProperty
+  })
+
+  highlightObject = omit(highlightObject, ['slug']);
+
+  highlightObject = parseHighlightedAttributes({
+    indexName,
+    highlightObject,
+    preTag,
+    postTag
+  })
 
   return highlightObject;
 }
