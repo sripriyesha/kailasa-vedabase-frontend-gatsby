@@ -1,9 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Container } from "react-bootstrap";
+import Nav from "./nav";
 
-const Layout = ({ children, seo }) => (
+const Layout = ({ children, navChildren }) => (
   <>
-    <main>{children}</main>
+    <Container>
+      <Nav navChildren={navChildren}/>
+      <main>{children}</main>
+    </Container>
   </>
 );
 

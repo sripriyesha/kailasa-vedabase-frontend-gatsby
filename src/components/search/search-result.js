@@ -1,0 +1,182 @@
+import { Link } from "gatsby"
+import { default as React } from "react"
+import {
+  connectStateResults,
+  Index,
+  Snippet,
+  PoweredBy,
+  connectHits,
+} from "react-instantsearch-dom"
+import { parseAlgoliaHit, HIGHLIGHT_TAGS } from "./react-instantsearch-core/highlight"
+import { omit } from "./react-instantsearch-core/utils";
+
+const convertIndexNameToText = (indexName) => {
+  switch (indexName) {
+    case 'scripture':
+      return 'Scriptures';
+
+    case 'scripture-verse':
+      return 'Scripture verses';
+  
+    default:
+      break;
+  }
+};
+
+const HitCountAndIndexName = connectStateResults(({ searchResults, indexName }) => {
+  const hitCount = searchResults && searchResults.nbHits
+
+  return hitCount > 0 ? (
+    <div style={{ display: 'flex'}}>
+      <span style={{ flex: 1}}>{convertIndexNameToText(indexName)}</span>
+      <span className="HitCount">  
+        {hitCount} result{hitCount !== 1 ? `s` : ``}
+      </span>
+    </div>
+  ) : null
+})
+
+const buildHighlightMarkup = (part, index) => (
+  part.isHighlighted ? (
+    <mark className="ais-Highlight-highlighted" key={index}>{part.value}</mark>
+  ) : (
+    <span className="ais-Highlight-nonHighlighted" key={index}>{part.value}</span>
+  )
+);
+
+const Highlight = ({ hit, indexName }) => {
+  let parsedHit = parseAlgoliaHit({
+    highlightProperty: '_highlightResult',
+    hit,
+    preTag: HIGHLIGHT_TAGS.highlightPreTag,
+    postTag: HIGHLIGHT_TAGS.highlightPostTag,
+    indexName
+  });
+
+  const markups = [];
+
+  switch (indexName) {
+    case 'scripture':
+      markups.push(
+        <h4>
+          {parsedHit['title'].map(
+            (part, index) => buildHighlightMarkup(part, index)
+          )}
+        </h4>
+      );
+      break;
+
+    case 'scripture-verse':
+    // order translationAurobindoEnglish
+
+      markups.push(
+        <h4>
+          {parsedHit['translationAurobindoEnglish'].map(
+            (part, index) => buildHighlightMarkup(part, index)
+          )}
+        </h4>
+      );
+
+      let scripture = null;
+      if (parsedHit.hasOwnProperty('scripture')) {
+        scripture = parsedHit['scripture'];
+      }
+
+      parsedHit = omit(parsedHit, ['translationAurobindoEnglish', 'scripture']);
+
+      const orderedIndexRemainingFields = [
+        'transliteration',
+        'sanksritSutra',
+        'translationAurobindoHindi',
+        'glossary',
+        'sutraNumber',
+      ];
+
+      for (let index = 0; index < orderedIndexRemainingFields.length; index++) {
+        const fieldName = orderedIndexRemainingFields[index];
+        
+        if (parsedHit.hasOwnProperty(fieldName)) {
+          markups.push(
+            <p>
+              {parsedHit[fieldName].map(
+                (part, index) => buildHighlightMarkup(part, index)
+              )}
+            </p>
+          );
+
+          break;
+        }
+      }
+
+      if (scripture !== null) {
+        markups.push(
+          <p>
+            <b>Scripture:</b> {scripture.map(
+              (part, index) => buildHighlightMarkup(part, index)
+            )}
+          </p>
+        );
+      }
+      break;
+  
+    default:
+      break;
+  }
+
+  return (
+    <span className="ais-Highlight">
+      {markups.map((item, index) => {
+        return (
+          <div key={index}>
+            {item}
+          </div >
+        )
+      })}
+    </span>
+  );
+};
+
+const PageHit = ({ indexName, hit }) => (
+  <div>
+    <Link to={`/${indexName}/${hit.slug}`}>
+      <Highlight hit={hit} tagName="mark" indexName={indexName}/>
+    </Link>
+    <Snippet attribute="excerpt" hit={hit} tagName="mark" />
+  </div>
+)
+
+const Hits = ({ indexName, hits }) => {
+  return (
+    <div className="ais-Hits Hits">
+      <ul className="ais-Hits-list">
+        {hits.map(hit => (
+          <li className="ais-Hits-item" key={hit.slug}> 
+            <PageHit hit={hit} indexName={indexName} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+const CustomHits = connectHits(Hits);
+
+const HitsInIndex = ({ index }) => (
+  <Index indexName={index.name}>
+    <HitCountAndIndexName indexName={index.name}/>
+    <CustomHits indexName={index.name} />
+  </Index>
+)
+
+const SearchResult = ({ indices, className }) => (
+  <div className={className}>
+    {indices.map((index, i) => (
+      <div key={`${index.name}-hitsParent`}>
+        <HitsInIndex index={index} key={`${index.name}-hitsInIndex`} />
+      </div>
+    ))}
+    <PoweredBy />
+  </div>
+)
+
+export default SearchResult
