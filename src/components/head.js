@@ -6,12 +6,6 @@ const Head = ({ title }) => {
   return (
     <Helmet
       title={title}
-      link={[
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css?family=Staatliches",
-        },
-      ]}
     />
   );
 };

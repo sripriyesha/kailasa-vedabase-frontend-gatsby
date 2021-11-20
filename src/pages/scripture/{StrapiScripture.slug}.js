@@ -2,7 +2,6 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import { Col, Row } from "react-bootstrap";
 import Layout from "../../components/layout";
-import "../../assets/css/main.css";
 
 const Scripture = ({ data}) => {
   const scripture = data.strapiScripture;

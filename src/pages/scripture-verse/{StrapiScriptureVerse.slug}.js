@@ -1,40 +1,57 @@
-import React, { useCallback/*, useState */} from "react";
+import React, { useEffect } from "react";
 import { graphql, Link } from "gatsby";
 import { Col, Row } from "react-bootstrap";
+import $ from 'jquery';
+import Cookies from 'js-cookie';
 
 import Layout from "../../components/layout";
-import ButtonToggle from "../../components/button-toggle";
-import useBooleanCookie from "../../hooks/useBooleanCookie";
-import "../../assets/css/main.css";
+
 
 const ScriptureVerse = ({ data }) => {
   const scriptureVerse = data.strapiScriptureVerse;
   
-  const [devanagariEnabled, setDevanagariEnabled] = useBooleanCookie('vedabase_devanagari', true);
-  const [verseTextEnabled, setVerseTextEnabled] = useBooleanCookie('vedabase_versetext', true);
-  const [glossaryEnabled, setGlossaryEnabled] = useBooleanCookie('vedabase_glossary', true);
-  const [englishTranslationEnabled, setEnglishTranslationEnabled] = useBooleanCookie('vedabase_englishtranslation', true);
-  const [hindiTranslationEnabled, setHindiTranslationEnabled] = useBooleanCookie('vedabase_hinditranslation', true);
+  useEffect(() => {
+    const cookies = [
+      'vedabase_devanagari',
+      'vedabase_verse-text',
+      'vedabase_glossary',
+      'vedabase_translation-english',
+      'vedabase_translation-hindi'
+    ];
 
-  const toggleDevanagari = useCallback(() => {
-    setDevanagariEnabled(!devanagariEnabled);
-  }, [setDevanagariEnabled, devanagariEnabled]);
+    for (let index = 0; index < cookies.length; index++) {
+        const cookieName = cookies[index];
+        const cookie = Cookies.get(cookieName);
+        const classNamePart2 = cookieName.split('_')[1];
+        const $btn = $('.btn-' + classNamePart2);
+        const $text = $('.text-' + classNamePart2);
 
-  const toggleVerseText = useCallback(() => {
-    setVerseTextEnabled(!verseTextEnabled);
-  }, [setVerseTextEnabled, verseTextEnabled]);
+        if (cookie === undefined) {
+          Cookies.set(cookieName, 'true');
+        }
 
-  const toggleGlossary = useCallback(() => {
-    setGlossaryEnabled(!glossaryEnabled);
-  }, [setGlossaryEnabled, glossaryEnabled]);
+        if (cookie === 'false') {
+          $btn.addClass('off');
+          $btn.find('.fa').removeClass('fa-check-circle-o').addClass('fa-ban');
+          $text.hide();
+        }
 
-  const toggleEnglishTranslation = useCallback(() => {
-    setEnglishTranslationEnabled(!englishTranslationEnabled);
-  }, [setEnglishTranslationEnabled, englishTranslationEnabled]);
+        $btn.on('click', function() {
+            if ($btn.hasClass('off')) {
+                $btn.removeClass('off');
+                $btn.find('.fa').removeClass('fa-ban').addClass('fa-check-circle-o');
+                $text.show();
+                Cookies.set(cookieName, 'true');
+                return;
+            }
 
-  const toggleHindiTranslation = useCallback(() => {
-    setHindiTranslationEnabled(!hindiTranslationEnabled);
-  }, [setHindiTranslationEnabled, hindiTranslationEnabled]);
+            $btn.addClass('off');
+            $btn.find('.fa').removeClass('fa-check-circle-o').addClass('fa-ban');
+            $text.hide();
+            Cookies.set(cookieName, 'false');
+        });  
+    }
+  }, []);
 
   return (
     <Layout>
@@ -45,38 +62,33 @@ const ScriptureVerse = ({ data }) => {
           </Link>
         </Col>
       </Row>
-      <ButtonToggle
-        toggleFunction={toggleDevanagari}
-        isOn={devanagariEnabled}
-        title={'Devanagari'}
-      />
-      <ButtonToggle
-        toggleFunction={toggleVerseText}
-        isOn={verseTextEnabled}
-        title={'Verse Text'}
-      />
-      <ButtonToggle
-        toggleFunction={toggleGlossary}
-        isOn={glossaryEnabled}
-        title={'Glossary'}
-      />
-      <ButtonToggle
-        toggleFunction={toggleEnglishTranslation}
-        isOn={englishTranslationEnabled}
-        title={'English translation'}
-      />
-      <ButtonToggle
-        toggleFunction={toggleHindiTranslation}
-        isOn={hindiTranslationEnabled}
-        title={'Hindi translation'}
-      />
+      <button className="btn-devanagari btn-toggle" data-toggle="text-devanagari">
+        <i className="fa fa-check-circle-o fa-lg"></i>
+        {' Devanagari'}
+      </button>
+      <button className="btn-verse-text btn-toggle" data-toggle="text-verse-text">
+        <i className="fa fa-check-circle-o fa-lg"></i>
+        {' Verse Text'}
+      </button>
+      <button className="btn-glossary btn-toggle" data-toggle="text-glossary">
+        <i className="fa fa-check-circle-o fa-lg"></i>
+        {' Glossary'}
+      </button>
+      <button className="btn-translation-english btn-toggle" data-toggle="text-translation-english">
+        <i className="fa fa-check-circle-o fa-lg"></i>
+        {' English translation'}
+      </button>
+      <button className="btn-translation-hindi btn-toggle" data-toggle="text-translation-hindi">
+        <i className="fa fa-check-circle-o fa-lg"></i>
+        {' Hindi translation'}
+      </button>
       <Row>
         <p>{scriptureVerse.sutraNumber}</p>
-        {devanagariEnabled && <p>{scriptureVerse.sanskritSutra}</p>}
-        {verseTextEnabled && <p>{scriptureVerse.transliteration}</p>}
-        {glossaryEnabled && <p>{scriptureVerse.glossary}</p>}
-        {englishTranslationEnabled && <p>{scriptureVerse.translationAurobindoEnglish}</p>}
-        {hindiTranslationEnabled && <p>{scriptureVerse.translationAurobindoHindi}</p>}
+        <p className="text-devanagari">{scriptureVerse.sanskritSutra}</p>
+        <p className="text-verse-text">{scriptureVerse.transliteration}</p>
+        <p className="text-glossary">{scriptureVerse.glossary}</p>
+        <p className="text-translation-english">{scriptureVerse.translationAurobindoEnglish}</p>
+        <p className="text-translation-hindi">{scriptureVerse.translationAurobindoHindi}</p>
       </Row>
     </Layout>
   );

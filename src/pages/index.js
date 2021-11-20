@@ -3,7 +3,6 @@ import { graphql, Link, useStaticQuery } from "gatsby";
 import { Col, Row } from "react-bootstrap";
 
 import Layout from "../components/layout";
-import "../assets/css/main.css";
 
 const NavChildren = () => (
   <h2>The topmost source of sanskrit scriptures</h2>
