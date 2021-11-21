@@ -21,19 +21,23 @@ const ScriptureVerse = ({ data }) => {
 
     for (let index = 0; index < cookies.length; index++) {
         const cookieName = cookies[index];
-        const cookie = Cookies.get(cookieName);
+        let cookieValue = Cookies.get(cookieName);
         const classNamePart2 = cookieName.split('_')[1];
         const $btn = $('.btn-' + classNamePart2);
         const $text = $('.text-' + classNamePart2);
 
-        if (cookie === undefined) {
-          Cookies.set(cookieName, 'true');
+        if (cookieValue === undefined) {
+          Cookies.set(cookieName, 'on');
+          cookieValue = Cookies.get(cookieName);
         }
 
-        if (cookie === 'false') {
+        if (cookieValue === 'on') {
+          $text.show();
+        }
+
+        if (cookieValue === 'off') {
           $btn.addClass('off');
           $btn.find('.fa').removeClass('fa-check-circle-o').addClass('fa-ban');
-          $text.hide();
         }
 
         $btn.on('click', function() {
@@ -41,14 +45,14 @@ const ScriptureVerse = ({ data }) => {
                 $btn.removeClass('off');
                 $btn.find('.fa').removeClass('fa-ban').addClass('fa-check-circle-o');
                 $text.show();
-                Cookies.set(cookieName, 'true');
+                Cookies.set(cookieName, 'on');
                 return;
             }
 
             $btn.addClass('off');
             $btn.find('.fa').removeClass('fa-check-circle-o').addClass('fa-ban');
             $text.hide();
-            Cookies.set(cookieName, 'false');
+            Cookies.set(cookieName, 'off');
         });  
     }
   }, []);
@@ -84,11 +88,11 @@ const ScriptureVerse = ({ data }) => {
       </button>
       <Row>
         <p>{scriptureVerse.sutraNumber}</p>
-        <p className="text-devanagari">{scriptureVerse.sanskritSutra}</p>
-        <p className="text-verse-text">{scriptureVerse.transliteration}</p>
-        <p className="text-glossary">{scriptureVerse.glossary}</p>
-        <p className="text-translation-english">{scriptureVerse.translationAurobindoEnglish}</p>
-        <p className="text-translation-hindi">{scriptureVerse.translationAurobindoHindi}</p>
+        <p className="text-devanagari" style={{ display: 'none'}}>{scriptureVerse.sanskritSutra}</p>
+        <p className="text-verse-text" style={{ display: 'none'}}>{scriptureVerse.transliteration}</p>
+        <p className="text-glossary" style={{ display: 'none'}}>{scriptureVerse.glossary}</p>
+        <p className="text-translation-english" style={{ display: 'none'}}>{scriptureVerse.translationAurobindoEnglish}</p>
+        <p className="text-translation-hindi" style={{ display: 'none'}}>{scriptureVerse.translationAurobindoHindi}</p>
       </Row>
     </Layout>
   );
