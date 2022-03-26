@@ -11,30 +11,62 @@ const NavChildren = () => (
 const IndexPage = () => {
   const data = useStaticQuery(query);
 
+  const scriptureCategories = data.allStrapiScriptureCategory.edges;
   const scriptures = data.allStrapiScripture.edges;
 
   return (
     <Layout navChildren={NavChildren}>
-      <Row>
-        {scriptures.map((scripture) => {
-          return (
-            <Col sm={2} md={2} lg={2} key={scripture.node.slug}>
-              <Link
-                to={`/scripture/${scripture.node.slug}`}
-                key={scripture.node.slug}
-              >
-                {scripture.node.title}
-              </Link>
-            </Col>
-          )
-        })}
-      </Row>
+      <h2>Categories</h2>
+      {scriptureCategories.map((scriptureCategory) => {
+        if (scriptureCategory.node.scriptureCategoryParent !== null) {
+          return;
+        }
+
+        return (
+          <Row>
+            <Link
+              to={scriptureCategory.node.slug}
+              key={scriptureCategory.node.slug}
+            >
+              {scriptureCategory.node.name}
+            </Link>
+          </Row>
+        )
+      })}
+      <h2>Scriptures</h2>
+      {scriptures.map((scripture) => {
+        return (
+          <Row>
+            <Link
+              to={`/scripture/${scripture.node.slug}`}
+              key={scripture.node.slug}
+            >
+              {scripture.node.title}
+            </Link>
+          </Row>
+        )
+      })}
     </Layout>
   );
 };
 
 const query = graphql`
   query {
+    allStrapiScriptureCategory {
+      edges {
+        node {
+          id
+          name
+          slug
+          scriptureCategoryParent {
+            id
+            name
+            slug
+            scriptureCategoryParent
+          }
+        }
+      }
+    }
     allStrapiScripture {
       edges {
         node {

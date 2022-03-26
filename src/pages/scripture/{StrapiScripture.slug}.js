@@ -5,6 +5,7 @@ import Layout from "../../components/layout";
 
 const Scripture = ({ data}) => {
   const scripture = data.strapiScripture;
+  const scriptureCategories = data.allStrapiScriptureCategory;
 
   return (
     <Layout>
