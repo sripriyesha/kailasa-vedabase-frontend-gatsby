@@ -12,9 +12,26 @@ const Scripture = ({ data}) => {
     <Layout>
       <Row>
         <Col sm={12}>
-          <Link to={`/vaidika/shruti/veda/upanishads/${scripture.slug}`}>
-            <h1>{scripture.title}</h1>
+          <Link to={`/vaidika`}>
+            <span>Vaidika</span>
           </Link>
+          /
+          <Link to={`/vaidika/shruti`}>
+            <span>Shruti</span>
+          </Link>
+          /
+          <Link to={`/vaidika/shruti/veda`}>
+            <span>Veda</span>
+          </Link>
+          /
+          <Link to={`/vaidika/shruti/veda/upanishads`}>
+            <span>Upanishads</span>
+          </Link>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={12}>
+            <h1>{scripture.title}</h1>
         </Col>
       </Row>
       <Row>
