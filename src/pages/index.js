@@ -11,17 +11,21 @@ const NavChildren = () => (
 const IndexPage = () => {
   const data = useStaticQuery(query);
 
-  const books = data.allStrapiBook.edges;
+  let books = data.allStrapiBook.edges;
   const scriptureCategories = data.allStrapiScriptureCategory.edges;
   const scriptures = data.allStrapiScripture.edges;
+
+  books = books.sort((a, b) => {
+    return a.node.title < b.node.title ? -1 : (a.node.title > b.node.title ? 1 : 0);
+  })
 
   return (
     <Layout navChildren={NavChildren}>
       <h2>Books</h2>
       {books.map((book) => {
         return (
-          <Row>
-            <Col sm={12}>
+          <Row key={`row-${book.node.slug}`}>
+            <Col sm={12} key={`col-${book.node.slug}`}>
               <Link
                 to={`/library/${book.node.slug}`}
                 key={book.node.slug}
@@ -39,8 +43,8 @@ const IndexPage = () => {
         }
 
         return (
-          <Row>
-            <Col sm={12}>
+          <Row key={`row-${scriptureCategory.node.slug}`}>
+            <Col sm={12} key={`col-${scriptureCategory.node.slug}`}>
               <Link
                 to={scriptureCategory.node.slug}
                 key={scriptureCategory.node.slug}
@@ -54,8 +58,8 @@ const IndexPage = () => {
       <h2>Scriptures</h2>
       {scriptures.map((scripture) => {
         return (
-          <Row>
-            <Col sm={12}>
+          <Row key={`row-${scripture.node.slug}`}>
+            <Col sm={12} key={`col-${scripture.node.slug}`}>
               <Link
                 to={`/scripture/${scripture.node.slug}`}
                 key={scripture.node.slug}

@@ -8,7 +8,7 @@ const BookChapter = ({ data}) => {
   let bookChaptersEdges = data.allStrapiBookChapter.edges;
 
   bookChaptersEdges = bookChaptersEdges.filter((edge) => {
-    return edge.node.book.slug === 'srila-prabhupada-lilamrta-volume-one';
+    return edge.node.book.slug === 'living-enlightenment';
   });
 
   let previousLinkSlug = null;
@@ -78,7 +78,7 @@ const BookChapter = ({ data}) => {
 };
 
 export const query = graphql`
-  query SrilaPrabhupadaLilamrtaVolumeOneBookChapter($slug: String!) {
+  query LivingEnlightenmentBookChapter($slug: String!) {
     strapiBookChapter(slug: { eq: $slug }) {
       title
       content
