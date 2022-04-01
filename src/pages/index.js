@@ -11,25 +11,43 @@ const NavChildren = () => (
 const IndexPage = () => {
   const data = useStaticQuery(query);
 
+  const books = data.allStrapiBook.edges;
   const scriptureCategories = data.allStrapiScriptureCategory.edges;
   const scriptures = data.allStrapiScripture.edges;
 
   return (
     <Layout navChildren={NavChildren}>
-      <h2>Categories</h2>
+      <h2>Books</h2>
+      {books.map((book) => {
+        return (
+          <Row>
+            <Col sm={12}>
+              <Link
+                to={`/library/${book.node.slug}`}
+                key={book.node.slug}
+              >
+                {book.node.title}
+              </Link>
+            </Col>
+          </Row>
+        )
+      })}
+      <h2>Scriptures Categories</h2>
       {scriptureCategories.map((scriptureCategory) => {
         if (scriptureCategory.node.scriptureCategoryParent !== null) {
-          return;
+          return null;
         }
 
         return (
           <Row>
-            <Link
-              to={scriptureCategory.node.slug}
-              key={scriptureCategory.node.slug}
-            >
-              {scriptureCategory.node.name}
-            </Link>
+            <Col sm={12}>
+              <Link
+                to={scriptureCategory.node.slug}
+                key={scriptureCategory.node.slug}
+              >
+                {scriptureCategory.node.name}
+              </Link>
+            </Col>
           </Row>
         )
       })}
@@ -37,12 +55,14 @@ const IndexPage = () => {
       {scriptures.map((scripture) => {
         return (
           <Row>
-            <Link
-              to={`/scripture/${scripture.node.slug}`}
-              key={scripture.node.slug}
-            >
-              {scripture.node.title}
-            </Link>
+            <Col sm={12}>
+              <Link
+                to={`/scripture/${scripture.node.slug}`}
+                key={scripture.node.slug}
+              >
+                {scripture.node.title}
+              </Link>
+            </Col>
           </Row>
         )
       })}
@@ -52,6 +72,14 @@ const IndexPage = () => {
 
 const query = graphql`
   query {
+    allStrapiBook {
+      edges {
+        node {
+          title
+          slug
+        }
+      }
+    }
     allStrapiScriptureCategory {
       edges {
         node {

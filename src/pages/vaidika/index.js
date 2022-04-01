@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Layout from "../../components/layout";
 
 const Vaidika = ({ data}) => {
@@ -9,24 +9,31 @@ const Vaidika = ({ data}) => {
   return (
     <Layout>
       <Row>
-        {scriptureCategories.map((scriptureCategory) => {
+        <Col sm={12}>
+          <h1>Vaidika</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={12}>
+          {scriptureCategories.map((scriptureCategory) => {
             if (scriptureCategory.node.scriptureCategoryParent === null) {
-                return;
+              return null;
             }
 
             if (scriptureCategory.node.scriptureCategoryParent.name !== 'Vaidika') {
-                return;
+              return null;
             }
 
             return (
-                <Link
-                    to={`/vaidika/${scriptureCategory.node.slug}`}
-                    key={scriptureCategory.node.id}
-                >
-                    {scriptureCategory.node.name}
-                </Link>
+              <Link
+                to={`/vaidika/${scriptureCategory.node.slug}`}
+                key={scriptureCategory.node.id}
+              >
+                {scriptureCategory.node.name}
+              </Link>
             );
-        })}
+          })}
+        </Col>
       </Row>
     </Layout>
   );
