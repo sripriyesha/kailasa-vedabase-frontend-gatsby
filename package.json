@@ -24,7 +24,6 @@
     "gatsby-transformer-sharp": "^4.1.0",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
-    "moment": "^2.29.1",
     "path-browserify": "^1.0.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
@@ -32,11 +31,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-instantsearch-dom": "^6.15.0",
-    "react-markdown": "^7.1.0",
-    "react-moment": "^1.1.1",
-    "react-use-cookie": "^1.2.1",
     "styled-components": "^5.3.3",
-    "use-persisted-state": "^0.3.3"
   },
   "devDependencies": {
     "prettier": "^2.4.1"
