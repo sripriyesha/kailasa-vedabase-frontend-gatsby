@@ -1,12 +1,8 @@
 import React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Image } from "react-bootstrap";
 
 import Layout from "../components/layout";
-
-const NavChildren = () => (
-  <h2>The topmost source of sanskrit scriptures</h2>
-)
 
 const IndexPage = () => {
   const data = useStaticQuery(query);
@@ -20,22 +16,29 @@ const IndexPage = () => {
   })
 
   return (
-    <Layout navChildren={NavChildren}>
+    <Layout>
       <h2>Books</h2>
-      {books.map((book) => {
-        return (
-          <Row key={`row-${book.node.slug}`}>
-            <Col sm={12} key={`col-${book.node.slug}`}>
+      <Row>
+        {books.map((book) => {
+          return (
+            <Col sm={3} key={`col-${book.node.slug}`}>
               <Link
                 to={`/library/${book.node.slug}`}
                 key={book.node.slug}
               >
-                {book.node.title}
+                <Image
+                  style={{
+                    width: 261,
+                    height: 324,
+                  }}
+                  src={book.node.cover.localFile.publicURL}
+                />
+                <p style={{ textAlign: 'center' }}>{book.node.title}</p>
               </Link>
             </Col>
-          </Row>
-        )
-      })}
+          )
+        })}
+      </Row>
       <h2>Scriptures Categories</h2>
       {scriptureCategories.map((scriptureCategory) => {
         if (scriptureCategory.node.scriptureCategoryParent !== null) {
@@ -81,6 +84,11 @@ const query = graphql`
         node {
           title
           slug
+          cover {
+            localFile {
+              publicURL
+            }
+          }
         }
       }
     }

@@ -13,8 +13,8 @@ const Nav = ({ children }) => (
         <Col sm={12}>
             <Navbar>
                 <Navbar.Brand href="/">Kailasa Scriptures</Navbar.Brand>
+                <Search indices={searchIndices} />
             </Navbar>
-            <Search indices={searchIndices} />
             {children}
         </Col>
     </Row>

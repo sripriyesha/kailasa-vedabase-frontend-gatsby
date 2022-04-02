@@ -7,7 +7,7 @@ import "../assets/css/main.css";
 const Layout = ({ children, navChildren }) => (
   <>
     <Container>
-      <Nav navChildren={navChildren}/>
+      <Nav />
       <main>{children}</main>
     </Container>
   </>
