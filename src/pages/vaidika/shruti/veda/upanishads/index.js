@@ -29,11 +29,11 @@ const Upanishads = ({ data}) => {
       <Row>
         <Col sm={12}>
           {scriptures.map((scripture) => {
-            if (scripture.node.scriptureCategory === null) {
+            if (scripture.node.scripture_category === null) {
               return null;
             }
 
-            if (scripture.node.scriptureCategory.name !== 'Upanishads') {
+            if (scripture.node.scripture_category.name !== 'Upanishads') {
               return null;
             }
 
@@ -59,7 +59,7 @@ export const query = graphql`
         node {
           title
           slug
-          scriptureCategory {
+          scripture_category {
             name
           }
         }

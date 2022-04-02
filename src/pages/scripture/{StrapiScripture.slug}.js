@@ -17,13 +17,13 @@ const Scripture = ({ data}) => {
         </Col>
       </Row>
       <Row>
-        {scripture.scriptureVerses.map((scriptureVerse) => {
+        {scripture.scripture_verses.map((scriptureVerse) => {
           return (
             <Link
               to={`/scripture-verse/${scriptureVerse.slug}`}
               key={`${scripture.slug}__${scriptureVerse.slug}`}
             >
-              {scriptureVerse.sutraNumber}
+              {scriptureVerse.sutra_number}
             </Link>
           );
         })}
@@ -37,8 +37,8 @@ export const query = graphql`
     strapiScripture(slug: { eq: $slug }) {
       title
       slug
-      scriptureVerses {
-        sutraNumber
+      scripture_verses {
+        sutra_number
         slug
       }
     }

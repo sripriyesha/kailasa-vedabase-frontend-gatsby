@@ -88,11 +88,11 @@ const ScriptureVerse = ({ data }) => {
       </button>
       <Row>
         <p>{scriptureVerse.sutraNumber}</p>
-        <p className="text-devanagari" style={{ display: 'none'}}>{scriptureVerse.sanskritSutra}</p>
+        <p className="text-devanagari" style={{ display: 'none'}}>{scriptureVerse.sanskrit_sutra}</p>
         <p className="text-verse-text" style={{ display: 'none'}}>{scriptureVerse.transliteration}</p>
         <p className="text-glossary" style={{ display: 'none'}}>{scriptureVerse.glossary}</p>
-        <p className="text-translation-english" style={{ display: 'none'}}>{scriptureVerse.translationAurobindoEnglish}</p>
-        <p className="text-translation-hindi" style={{ display: 'none'}}>{scriptureVerse.translationAurobindoHindi}</p>
+        <p className="text-translation-english" style={{ display: 'none'}}>{scriptureVerse.translation_aurobindo_english}</p>
+        <p className="text-translation-hindi" style={{ display: 'none'}}>{scriptureVerse.translation_aurobindo_hindi}</p>
       </Row>
     </Layout>
   );
@@ -101,11 +101,11 @@ const ScriptureVerse = ({ data }) => {
 export const query = graphql`
   query ScriptureVerse($slug: String!) {
     strapiScriptureVerse(slug: { eq: $slug }) {
-        sutraNumber
-        sanskritSutra
+        sutra_number
+        sanskrit_sutra
         transliteration
-        translationAurobindoEnglish
-        translationAurobindoHindi
+        translation_aurobindo_english
+        translation_aurobindo_hindi
         glossary
         scripture {
           title

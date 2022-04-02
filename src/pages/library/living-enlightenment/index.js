@@ -5,7 +5,7 @@ import Layout from "../../../components/layout";
 
 const BookChapters = ({ data}) => {
   const book = data.strapiBook;
-  const bookChapters = book.bookChapters.sort((a, b) => {
+  const bookChapters = book.book_chapters.sort((a, b) => {
     return a.order < b.order ? -1 : (a.order > b.order ? 1 : 0);
   });
 
@@ -36,7 +36,7 @@ export const query = graphql`
   query {
     strapiBook(slug: {eq: "living-enlightenment"}) {
       title
-      bookChapters {
+      book_chapters {
         title
         slug
         order

@@ -25,11 +25,11 @@ const Veda = ({ data}) => {
       <Row>
         <Col sm={12}>
           {scriptureCategories.map((scriptureCategory) => {
-            if (scriptureCategory.node.scriptureCategoryParent === null) {
+            if (scriptureCategory.node.scripture_category_parent === null) {
               return null;
             }
 
-            if (scriptureCategory.node.scriptureCategoryParent.name !== 'Veda') {
+            if (scriptureCategory.node.scripture_category_parent.name !== 'Veda') {
               return null;
             }
 
@@ -56,11 +56,11 @@ export const query = graphql`
           id
           name
           slug
-          scriptureCategoryParent {
+          scripture_category_parent {
             id
             name
             slug
-            scriptureCategoryParent
+            scripture_category_parent
           }
         }
       }

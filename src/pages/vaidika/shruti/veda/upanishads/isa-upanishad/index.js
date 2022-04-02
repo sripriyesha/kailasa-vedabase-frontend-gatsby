@@ -5,7 +5,6 @@ import Layout from "../../../../../../components/layout";
 
 const Scripture = ({ data}) => {
   const scripture = data.strapiScripture;
-  const scriptureCategories = data.allStrapiScriptureCategory;
 
   return (
     <Layout>
@@ -34,13 +33,13 @@ const Scripture = ({ data}) => {
         </Col>
       </Row>
       <Row>
-        {scripture.scriptureVerses.map((scriptureVerse) => {
+        {scripture.scripture_verses.map((scriptureVerse) => {
           return (
             <Link
               to={`/vaidika/shruti/veda/upanishads/isa-upanishad/${scriptureVerse.slug}`}
               key={`${scripture.slug}__${scriptureVerse.slug}`}
             >
-              {scriptureVerse.sutraNumber}
+              {scriptureVerse.sutra_number}
             </Link>
           );
         })}
@@ -54,14 +53,9 @@ export const query = graphql`
     strapiScripture(slug: { eq: "isa-upanishad" }) {
       title
       slug
-      scriptureVerses {
-        sutraNumber
+      scripture_verses {
+        sutra_number
         slug
-      }
-      scriptureCategory {
-        id
-        name
-        scriptureCategoryParent
       }
     }
   }
