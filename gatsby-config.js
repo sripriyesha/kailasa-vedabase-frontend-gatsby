@@ -32,13 +32,14 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
     {
       resolve: "gatsby-source-strapi",
       options: {
-        apiURL: process.env.API_URL || "http://localhost:1337",
+        apiURL: process.env.STRAPI_API_URL || "http://localhost:1337",
+        accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "scripture",
           "scripture-verse",
