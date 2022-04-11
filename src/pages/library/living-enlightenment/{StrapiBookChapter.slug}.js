@@ -40,7 +40,7 @@ const BookChapter = ({ data}) => {
       </Row>
       <Row>
         <Col sm={12}>
-          {bookChapter.content.split('\n').map(function(item, key) {
+          {bookChapter.content.data.content.split('\n').map(function(item, key) {
             return (
               <span key={key}>
                 {item}
@@ -81,7 +81,11 @@ export const query = graphql`
   query LivingEnlightenmentBookChapter($slug: String!) {
     strapiBookChapter(slug: { eq: $slug }) {
       title
-      content
+      content {
+        data {
+          content
+        }
+      }
       order
       book {
         title

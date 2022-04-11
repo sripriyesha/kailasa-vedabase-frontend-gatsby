@@ -56,7 +56,6 @@ export const query = graphql`
             id
             name
             slug
-            scripture_category_parent
           }
         }
       }

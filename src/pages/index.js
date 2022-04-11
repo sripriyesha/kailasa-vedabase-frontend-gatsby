@@ -41,7 +41,7 @@ const IndexPage = () => {
       </Row>
       <h2>Scriptures Categories</h2>
       {scriptureCategories.map((scriptureCategory) => {
-        if (scriptureCategory.node.scriptureCategoryParent !== null) {
+        if (scriptureCategory.node.scripture_category_parent !== null) {
           return null;
         }
 
@@ -98,11 +98,15 @@ const query = graphql`
           id
           name
           slug
-          scriptureCategoryParent {
+          scripture_category_parent {
             id
             name
             slug
-            scriptureCategoryParent
+            scripture_category_parent {
+              id
+              name
+              slug
+            }
           }
         }
       }
