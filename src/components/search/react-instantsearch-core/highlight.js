@@ -101,7 +101,7 @@ function addMandatoryFields({
       break;
 
     case 'scripture-verse':
-      highlightObject['translationAurobindoEnglish'] = hit[highlightProperty]['translationAurobindoEnglish']['value'];
+      highlightObject['translation_aurobindo_english'] = hit[highlightProperty]['translation_aurobindo_english']['value'];
       break;
 
     default:
