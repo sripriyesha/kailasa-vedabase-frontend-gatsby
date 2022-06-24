@@ -66,7 +66,7 @@ function buildHighlightedSearchResultMarkup({
     case 'scripture-verse':
       markup.push(
         <h4>
-          {parsedHit['translationAurobindoEnglish'].map(
+          {parsedHit['translation_aurobindo_english'].map(
             (part, index) => buildHighlightMarkup(part, index)
           )}
         </h4>
@@ -77,14 +77,14 @@ function buildHighlightedSearchResultMarkup({
         scripture = parsedHit['scripture'];
       }
 
-      parsedHit = omit(parsedHit, ['translationAurobindoEnglish', 'scripture']);
+      parsedHit = omit(parsedHit, ['translation_aurobindo_english', 'scripture']);
 
       const orderedIndexRemainingFields = [
         'transliteration',
-        'sanksritSutra',
-        'translationAurobindoHindi',
+        'sanksrit_sutra',
+        'translation_aurobindo_hindi',
         'glossary',
-        'sutraNumber',
+        'sutra_number',
       ];
 
       for (let index = 0; index < orderedIndexRemainingFields.length; index++) {

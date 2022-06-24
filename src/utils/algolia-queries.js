@@ -22,11 +22,11 @@ const scriptureVersesQuery = `{
       edges {
         node {
             id
-            sutraNumber
-            sanskritSutra
+            sutra_number
+            sanskrit_sutra
             transliteration
-            translationAurobindoEnglish
-            translationAurobindoHindi
+            translation_aurobindo_english
+            translation_aurobindo_hindi
             glossary
             slug
             scripture {

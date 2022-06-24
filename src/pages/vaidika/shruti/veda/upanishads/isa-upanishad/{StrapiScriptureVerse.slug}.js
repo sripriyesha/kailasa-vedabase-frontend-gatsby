@@ -87,7 +87,7 @@ const ScriptureVerse = ({ data }) => {
         {' Hindi translation'}
       </button>
       <Row>
-        <p>{scriptureVerse.sutraNumber}</p>
+        <p>{scriptureVerse.sutra_number}</p>
         <p className="text-devanagari" style={{ display: 'none'}}>{scriptureVerse.sanskrit_sutra}</p>
         <p className="text-verse-text" style={{ display: 'none'}}>{scriptureVerse.transliteration}</p>
         <p className="text-glossary" style={{ display: 'none'}}>{scriptureVerse.glossary}</p>
