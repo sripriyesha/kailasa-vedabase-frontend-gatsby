@@ -40,7 +40,8 @@ const BookChapter = ({ data}) => {
       </Row>
       <Row>
         <Col sm={12}>
-          {bookChapter.content.data.content.split('\n').map(function(item, key) {
+          {bookChapter.content.data !== null &&
+           bookChapter.content.data.content.split('\n').map(function(item, key) {
             return (
               <span key={key}>
                 {item}
